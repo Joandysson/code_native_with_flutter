@@ -12,26 +12,24 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int _a = 0;
+  int _b = 0;
+  int _sum = 0;
 
-  void _incrementCounter() {
+  void _calcSum() {
     setState(() {
-      _counter++;
+      _sum = _a + _b;
     });
   }
 
@@ -39,26 +37,41 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('Nativo'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+        child: Padding(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Soma... $_sum',
+                style: TextStyle(fontSize: 30),
+              ),
+              TextField(
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  setState(() {
+                    _a = int.tryParse(value);
+                  });
+                },
+              ),
+              TextField(
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  setState(() {
+                    _b = int.tryParse(value);
+                  });
+                },
+              ),
+              ElevatedButton(
+                child: Text('Somar'),
+                onPressed: _calcSum,
+              )
+            ],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
       ),
     );
   }
